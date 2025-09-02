@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
         // save into the database
         userDao.save(user);
 
-        log.info("User {} registered successfully! ", user.getUserName());
+        log.info("User {} registered successfully! with a role '{}' ", user.getUserName(), user.getRoles());
         return "User registered successfully!";
     }
 

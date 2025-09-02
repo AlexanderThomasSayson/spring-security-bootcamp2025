@@ -33,17 +33,23 @@ public class SecurityConfig {
 
     // Public Endpoints
     private static  final String[] PUBLIC_ENDPOINTS = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/webjars/**",
             "/api/v1/auth/register",
             "/api/v1/auth/login"
     };
 
     //  ROLE_USER only endpoints
-    private static final String[] USER_ENDPOINTS ={
-
+    private static final String[]   USER_ENDPOINTS ={
+            "api/v1/users/**"
     };
 
     // ROLE_ADMIN endpoints
     private static final String[] ADMIN_ENDPOINTS = {
+            "api/v1/admins/**"
 
     };
 
@@ -67,7 +73,7 @@ public class SecurityConfig {
                  */
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers(USER_ENDPOINTS).hasAuthority("ROLE_USER")
+                        .requestMatchers(USER_ENDPOINTS).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                         .requestMatchers(ADMIN_ENDPOINTS).hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
